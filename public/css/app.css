@@ -1,0 +1,48 @@
+body {
+  background-color: skyblue;
+}
+
+.selected-link {
+  background-color: #3B82F6;
+  border-radius: 1000px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  color: white;
+  border: 2px solid #3B82F6;
+}
+
+.inactive-link {
+  border: 2px solid white;
+  border-radius: 1000px;
+  color: #3B82F6;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+.inactive-link:hover {
+  background-color: #f0f0f0;
+  border: 2px solid #f0f0f0;
+}
+
+[x-cloak] {
+  display: none;
+}
+
+.svg-icon {
+  width: 1em;
+  height: 1em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #333;
+}
+
+.svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
+}
