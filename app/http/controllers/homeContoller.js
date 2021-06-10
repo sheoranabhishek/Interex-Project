@@ -1,14 +1,16 @@
-
+const Interview = require("../../models/interview");
 
 
 function homeController(){
     return{
-        upcoming(req , res) {
-            res.render('upcoming');
+        async upcoming(req , res) {
+            var interviews = await Interview.find({'status' : 'Upcoming'}).populate('participants');
+            res.render('upcoming' , {interviews: interviews});
         },
-        all( req , res)
+        async all( req , res)
         {
-            res.render('all')
+            var interviews = await Interview.find().populate('participants');
+            res.render('all' , {interviews: interviews});
         }
     }
 }

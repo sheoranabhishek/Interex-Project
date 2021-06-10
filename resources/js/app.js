@@ -5,7 +5,7 @@
 
 //timepicker 
 $('.timepicker1').timepicker({
-    timeFormat: 'h:mm p',
+    timeFormat: 'H:mm',
     interval: 30,
     minTime: '8',
     maxTime: '7:00PM',

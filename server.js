@@ -1,9 +1,13 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const expressLayout = require("express-ejs-layouts");
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const session  = require('express-session');
+const flash = require('express-flash');
+const MongoDbStore = require('connect-mongo');
 
 
 //databse connection
@@ -15,6 +19,25 @@ connection.once('open' , ()=>{
 }).catch(err=>{
   console.log('Connection Failed');
 })
+
+
+//Session Store
+
+
+//Session Config
+app.use(session({
+  secret: process.env.COOKIE_SECRET, //for cookies,
+  resave: false,
+  store: MongoDbStore.create({
+    mongoUrl : url,
+    mongooseConnection: mongoose.connection
+    }),
+  saveUninitialized: false,
+  cookie: { maxAge : 1000*60*68*24 } //24 hours
+}))
+
+
+app.use(flash());
 
 //Assets
 app.use(express.static("public"));
