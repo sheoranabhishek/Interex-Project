@@ -12,7 +12,7 @@ const MongoDbStore = require('connect-mongo');
 
 //databse connection
 const url = "mongodb+srv://abhi:interviewbit@cluster0.ojaiq.mongodb.net/interviewbit?retryWrites=true&w=majority"
-mongoose.connect(url , {useNewUrlParser: true , useCreateIndex: true , useUnifiedTopology: true , useFindAndModify: true});
+mongoose.connect(url , {useNewUrlParser: true , useCreateIndex: true , useUnifiedTopology: true , useFindAndModify: false});
 const connection = mongoose.connection;
 connection.once('open' , ()=>{
   console.log('Database Connected');

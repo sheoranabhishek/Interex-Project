@@ -60,6 +60,10 @@
                 <% if (interviews.length > 0) { %>
 
                   <% interviews.forEach(interview => { %>
+                  
+                  <form action="/markcompleted/<%=interview._id %>" method="POST">
+                    <input type="hidden" name="_id" id="" value="<%=interview._id%>" >
+
                     <tr>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
@@ -78,8 +82,8 @@
 
                         <% interview.participants.forEach(participant => { %>
                           <div class="flex items-center my-2">
-                            <div class="flex-shrink-0 h-10 w-10">
-                              <img class="h-10 w-10 rounded-full" src="https://i.pravatar.cc/300" alt="">
+                            <div class="flex-shrink-0 h-10 w-10"> 
+                              <img class="h-10 w-10 rounded-full" src="https://i.pravatar.cc/200 " alt="">
                             </div>
                             <div class="ml-4">
                               <div class="text-sm font-bold text-black">
@@ -94,24 +98,36 @@
     
     
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-500 text-white">
-                          <%= interview.status %>
-                        </span>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <%= interview.startTime %> IST <p> <%=interview.date %> </p>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <%= interview.endTime %> IST <p> <%=interview.date %> </p>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Send Email</a>
-                      </td>
+
+
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full<% if ( interview.status == 'Upcoming') { %>
+                            bg-blue-500
+                           <% } else { %> bg-green-500 <%  } %>  text-white">
+                            <%= interview.status %>
+                          </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <%= interview.startTime %> IST <p> <%=interview.date %> </p>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <%= interview.endTime %> IST <p> <%=interview.date %> </p>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <a href="/<%=interview._id %>" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 " type="submit">
+                            Mark Completed
+                          </button>
+                        </td>
+
+                     
                     </tr> 
+
+                  </form>
+
+
                   <% }) %>
 
 
