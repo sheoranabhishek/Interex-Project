@@ -21,7 +21,7 @@ function createController(){
         // POST to createNewInterview or update the existing interview
         async createInterview(req , res){
 
-                //if the request is from the create new interview page
+            //if the request is from the create new interview page
             if(req.body._id == '' )
             {
                 
