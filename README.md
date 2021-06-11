@@ -71,7 +71,8 @@ Let's get started with the project. Follow the steps :
 
 ### Prerequisites
 
-* You need to install MongoDB Atlas on your PC and create a database with name **users**.
+* You need to install MongoDB Atlas on your PC and create a database with your desired name and a collection within it with name **users**.
+* Import the **users.json** file in the collection **users**.
 * Create a `.env` file and put the following details in it. 
 ```sh
     COOKIE_SECRET = 'YOUR COOKIE SECRET'

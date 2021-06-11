@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Isabella Vincent",
+    "email": "isabellavincent@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Arooj Muir",
+    "email": "aroojmuir@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Alexandre Pritchard",
+    "email": "alexandrepritchard@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Tye Holding",
+    "email": "tyeholding@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Eric Rowland",
+    "email": "ericrowland@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Hari Hooper",
+    "email": "harihooper@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Sanya Parrish",
+    "email": "sanyaparrish@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Shyam Andrews",
+    "email": "shyamandrews@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Magnus Boyd",
+    "email": "magnusboyd@gmail.com",
+    "occupied": false
+  },
+  {
+    "name": "Kelsi Cotton",
+    "email": "kelsicotton@gmail.com",
+    "occupied": false
+  }
+]
