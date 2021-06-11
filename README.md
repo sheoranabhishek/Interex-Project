@@ -33,15 +33,15 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+![screenshot](https://ibb.co/zxZQGwX)
 
 This project is a part of an interview assignment assigned by InterviewBit.
 The project is called Interview Scheduler. This scheduler is a solution to all the basic requirement of an interviewer. 
