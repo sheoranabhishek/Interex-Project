@@ -41,7 +41,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![screenshot](https://ibb.co/zxZQGwX)
+![screenshot](https://i.ibb.co/qjp7kwN/Capture.png)
 
 This project is a part of an interview assignment assigned by InterviewBit.
 The project is called Interview Scheduler. This scheduler is a solution to all the basic requirement of an interviewer. 
