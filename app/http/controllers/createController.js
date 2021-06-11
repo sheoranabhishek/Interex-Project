@@ -10,13 +10,18 @@ var transporter = nodemailer.createTransport({
     }
 });
 
+
 function createController(){
     return{
+        //get to /Create
         async index(req , res) {
                 const users = await User.find().sort({"name" : 1});
                 return res.render('create' , {users: users , heading: "Create New" });
         },
+        // POST to createNewInterview or update the existing interview
         async createInterview(req , res){
+
+                //if the request is from the create new interview page
             if(req.body._id == '' )
             {
                 
@@ -48,6 +53,21 @@ function createController(){
             }
 
             //checking if end time is less than start time ?
+            var start = parseInt(startTime.replace(':' , '') , 10);
+            var end = parseInt(endTime.replace(':' , '') , 10);
+            if( start >= end && end!=0 )
+            {
+
+                req.flash('error' , 'Start time must be less than End time.');
+                //we have to return a message and redirect 
+                req.flash('title' , title);
+                req.flash('description' , description);
+                req.flash('startTime' , startTime);
+                req.flash('endTime' , endTime);
+                req.flash('date' , date);
+                return res.redirect('/create');
+            }
+
 
         
             //storing the selectedPeople in the array
@@ -67,6 +87,11 @@ function createController(){
                     return res.redirect('/create');
                 }
             }
+            
+            //converting the string date to date object
+            var dateModified = new Date(date);
+            
+
 
             // creating an interview if all above conditions satisfy
             const newInterview = new Interview({
@@ -75,7 +100,7 @@ function createController(){
                 participants: selectedPeople,
                 startTime: startTime, 
                 endTime: endTime, 
-                date: date
+                date: dateModified
             })
 
 
@@ -87,9 +112,10 @@ function createController(){
                 {
                     update = {occupied: true};
                     User.findOneAndUpdate({email: user.email}, update , (err , data)=>{
-
-                        console.log(data);
-
+                        if( err)
+                        {
+                            console.log(err);
+                        }
                     } )
                 }
 
@@ -107,10 +133,6 @@ function createController(){
                         {
                             console.log(error);
                         }
-                        else
-                        {
-                            console.log('Email sent : ' + info.response);
-                        }
                         });
                 }
                 return res.redirect('/');
@@ -121,6 +143,7 @@ function createController(){
             });
 
             }
+                //if the request is from the update interview page
             else{
  
                 //we receive the data 
@@ -152,6 +175,20 @@ function createController(){
                 }
 
                 //checking if end time is less than start time ?
+                var start = parseInt(startTime.replace(':' , '') , 10);
+                var end = parseInt(endTime.replace(':' , '') , 10);
+                if( start >= end && end!=0 )
+                {
+
+                    req.flash('error' , 'Start time must be less than End time.');
+                    //we have to return a message and redirect 
+                    req.flash('title' , title);
+                    req.flash('description' , description);
+                    req.flash('startTime' , startTime);
+                    req.flash('endTime' , endTime);
+                    req.flash('date' , date);
+                    return res.redirect('/create');
+                }
             
                 //storing the selectedPeople in the array
                 var selectedPeople = [];
@@ -171,6 +208,8 @@ function createController(){
                     }
                 }
 
+                var dateModified = new Date(date);
+
                 // creating an interview if all above conditions satisfy
                 const update = {
                     title: title, 
@@ -178,7 +217,7 @@ function createController(){
                     participants: selectedPeople,
                     startTime: startTime, 
                     endTime: endTime, 
-                    date: date
+                    date: dateModified
                 }
 
                 //this will update the result.
@@ -188,7 +227,10 @@ function createController(){
                 {
                     let updateNew = {occupied: true};
                     User.findOneAndUpdate({email: user.email}, updateNew , (err , data)=>{
-                        console.log(data);
+                        if( err )
+                        {
+                            console.log(err);
+                        }
 
                     } )
                 }         
@@ -206,10 +248,6 @@ function createController(){
                         {
                             console.log(error);
                         }
-                        else
-                        {
-                            console.log('Email sent : ' + info.response);
-                        }
                         });
                 }
                     return res.redirect('/all');
@@ -217,6 +255,7 @@ function createController(){
             }
   
         },
+        // GET to update a specific interview
         async update(req , res){
             if( mongoose.Types.ObjectId.isValid(req.params.id))
             {
@@ -232,6 +271,7 @@ function createController(){
             }
               
         },
+        // POST to mark interview as completed
         async markCompleted(req , res)
         {
             if( mongoose.Types.ObjectId.isValid(req.params.id))
@@ -262,9 +302,22 @@ function createController(){
                     return res.redirect('/all');
                 })
             }
+        },
+        // Delete a completed interview
+        async delete(req , res)
+        {
+            if( mongoose.Types.ObjectId.isValid(req.params.id))
+            {
+                const interview = await Interview.findById(req.params.id);
+                Interview.findOneAndDelete({_id: req.body._id} , (err , data)=>{  
+                    return res.redirect('/all');
+                })
+            }
         }
 
     }
 }
+
+
 
 module.exports = createController;

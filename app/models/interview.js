@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose');
 const User = require('./user');
-
 const Schema = mongoose.Schema
 
 const interviewSchema = new Schema({
@@ -11,8 +10,8 @@ const interviewSchema = new Schema({
     participants: [{type : mongoose.Schema.Types.ObjectId,ref : 'User' , required: true} ],
     status: {type: String , default: 'Upcoming'},
     startTime: {type: String , required: true},
-    endTime: {type: String , required: true},
-    date: {type: String , required: true}
+    endTime: {type: String  , required: true},
+    date: {type: Date , required: true}
 } , {timestamps: true});
 
 const Interview = mongoose.model('Interview', interviewSchema);

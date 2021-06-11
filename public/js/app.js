@@ -9,12 +9,12 @@
 
 //timepicker 
 $('.timepicker1').timepicker({
-  timeFormat: 'H:mm',
+  timeFormat: 'H:mm p',
   interval: 30,
   minTime: '8',
   maxTime: '7:00PM',
-  startTime: '10:00',
-  dynamic: false,
+  startTime: '8:00PM',
+  dynamic: true,
   dropdown: true,
   scrollbar: true
 });
@@ -27,15 +27,12 @@ $('.timepicker2').timepicker({
   dynamic: false,
   dropdown: true,
   scrollbar: true
-});
-$('[data-toggle="datepicker"]').datepicker();
+}); //datepicker configuration
+
 var now = Date.now();
-$().datepicker({
-  filter: function filter(date, view) {
-    if (date < now) {
-      return false; // Disable all Sundays, but still leave months/years, whose first day is a Sunday, enabled.
-    }
-  }
+$('[data-toggle="datepicker"]').datepicker({
+  format: 'mm/dd/yyyy',
+  startDate: now
 });
 
 /***/ }),

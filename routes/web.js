@@ -13,6 +13,8 @@ function initRoutes(app){
     // app.post("/statusUpdate", statusContoller().update );
     app.get("/:id",createController().update);
     app.post("/markcompleted/:id" ,createController().markCompleted);
+    app.post("/delete/:id" ,createController().delete);
+
 }
   
 

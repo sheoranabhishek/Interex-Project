@@ -11,7 +11,7 @@ const MongoDbStore = require('connect-mongo');
 
 
 //databse connection
-const url = "mongodb+srv://abhi:interviewbit@cluster0.ojaiq.mongodb.net/interviewbit?retryWrites=true&w=majority"
+const url = process.env.MONGO_URL;
 mongoose.connect(url , {useNewUrlParser: true , useCreateIndex: true , useUnifiedTopology: true , useFindAndModify: false});
 const connection = mongoose.connection;
 connection.once('open' , ()=>{
