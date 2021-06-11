@@ -17,13 +17,11 @@ function createController(){
                 return res.render('create' , {users: users , heading: "Create New" });
         },
         async createInterview(req , res){
-            console.log( "Request.body is = " + req.body._id);
             if(req.body._id == '' )
             {
                 
             //we receive the data 
             const { title , description , participants , startTime , endTime , date } = req.body;
-            console.log(title.length);
             if( !title.trim() || !startTime || !endTime || !date)
             {
                 req.flash('error' , 'Please fill the mandatory fields.');              
@@ -50,6 +48,7 @@ function createController(){
             }
 
             //checking if end time is less than start time ?
+
         
             //storing the selectedPeople in the array
             var selectedPeople = [];
@@ -58,11 +57,11 @@ function createController(){
                 selectedPeople.push(eachUser);
             } 
 
-
+            
             // validating if any of the participants is occupied ? => then we ask to recheck.
             for( i = 0 ; i < selectedPeople.length ;i++)
             {
-                if( selectedPeople[i].occupied === 1)
+                if( selectedPeople[i].occupied == true)
                 {
                     req.flash('error' , `User ${interviewee[i]} already has interview scheduled. `  );
                     return res.redirect('/create');
@@ -79,13 +78,22 @@ function createController(){
                 date: date
             })
 
-            //this will make everything occupied.
-
 
             //saving the interview to the database.
             newInterview.save().then( (newInterview) => {
-                //sending emails to the members 
 
+                //marking the users occupied 
+                for( user of newInterview.participants)
+                {
+                    update = {occupied: true};
+                    User.findOneAndUpdate({email: user.email}, update , (err , data)=>{
+
+                        console.log(data);
+
+                    } )
+                }
+
+                //sending emails to the members 
                 for(email of interviewee)
                 {
                     var mailOptions = {
@@ -156,12 +164,10 @@ function createController(){
                 // validating if any of the participants is occupied ? => then we ask to recheck.
                 for( i = 0 ; i < selectedPeople.length ;i++)
                 {
-                    console.log('outside');
-                    if( selectedPeople[i].occupied === 1)
+                    if( selectedPeople[i].occupied == true)
                     {
-                        console.log('here');
                         req.flash('error' , `User ${interviewee[i]} already has interview scheduled. `  );
-                        return res.redirect('/back');
+                        return res.redirect('back');
                     }
                 }
 
@@ -177,6 +183,16 @@ function createController(){
 
                 //this will update the result.
                 Interview.findOneAndUpdate({_id: req.body._id} , update , (err , data)=>{
+                //marking all user occupied.
+                for( user of selectedPeople)
+                {
+                    let updateNew = {occupied: true};
+                    User.findOneAndUpdate({email: user.email}, updateNew , (err , data)=>{
+                        console.log(data);
+
+                    } )
+                }         
+                //sending email of updation
                 for(email of interviewee)
                 {
                     var mailOptions = {
@@ -196,7 +212,6 @@ function createController(){
                         }
                         });
                 }
-
                     return res.redirect('/all');
                 })
             }
@@ -221,14 +236,29 @@ function createController(){
         {
             if( mongoose.Types.ObjectId.isValid(req.params.id))
             {
-                const interview = await Interview.findById(req.params.id);
-
+                const interview = await Interview.findById(req.params.id).populate('participants');
                 const update = {
-                    status: 'Completed'
+                    status: 'Completed' , 
                 }
+
 
                 Interview.findOneAndUpdate({_id: req.body._id} , update , {returnOriginal: false} , (err , data)=>{
 
+                    //marking all the users unoccupied !
+                    for( user of interview.participants)
+                    {
+                        let updateNew = {occupied: false};
+                        User.findOneAndUpdate({email: user.email}, updateNew , (err , data)=>{
+    
+                            if( err)
+                            {
+                                console.data(err);
+                            }
+
+                        } )
+                    }
+
+                    
                     return res.redirect('/all');
                 })
             }
