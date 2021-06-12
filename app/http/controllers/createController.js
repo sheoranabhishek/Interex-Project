@@ -11,6 +11,16 @@ var transporter = nodemailer.createTransport({
 });
 
 
+function createFlash(req)
+{
+    const { title , description , participants , startTime , endTime , date } = req.body;
+    req.flash('title' , title);
+    req.flash('description' , description);
+    req.flash('startTime' , startTime);
+    req.flash('endTime' , endTime);
+    req.flash('date' , date);
+}
+
 function createController(){
     return{
         //get to /Create
@@ -31,11 +41,7 @@ function createController(){
             {
                 req.flash('error' , 'Please fill the mandatory fields.');              
                 //sending back the already filled details.
-                req.flash('title' , title);
-                req.flash('description' , description);
-                req.flash('startTime' , startTime);
-                req.flash('endTime' , endTime);
-                req.flash('date' , date);
+                createFlash(req);
                 return res.redirect('/create');
             }
 
@@ -44,11 +50,7 @@ function createController(){
             if( interviewee.length < 2)
             {
                 req.flash('error' , 'Add 2 or more participants to continue.')
-                req.flash('title' , title);
-                req.flash('description' , description);
-                req.flash('startTime' , startTime);
-                req.flash('endTime' , endTime);
-                req.flash('date' , date);
+                createFlash(req);
                 return res.redirect('/create');
             }
 
@@ -60,11 +62,7 @@ function createController(){
 
                 req.flash('error' , 'Start time must be less than End time.');
                 //we have to return a message and redirect 
-                req.flash('title' , title);
-                req.flash('description' , description);
-                req.flash('startTime' , startTime);
-                req.flash('endTime' , endTime);
-                req.flash('date' , date);
+                createFlash(req);
                 return res.redirect('/create');
             }
 
@@ -153,11 +151,7 @@ function createController(){
                 {
                     req.flash('error' , 'Please fill the mandatory fields.');              
                     //sending back the already filled details.
-                    req.flash('title' , title);
-                    req.flash('description' , description);
-                    req.flash('startTime' , startTime);
-                    req.flash('endTime' , endTime);
-                    req.flash('date' , date);
+                    createFlash(req);
                     return res.redirect('back');
                 }
 
@@ -182,11 +176,8 @@ function createController(){
 
                     req.flash('error' , 'Start time must be less than End time.');
                     //we have to return a message and redirect 
-                    req.flash('title' , title);
-                    req.flash('description' , description);
-                    req.flash('startTime' , startTime);
-                    req.flash('endTime' , endTime);
-                    req.flash('date' , date);
+                    createFlash(req);
+
                     return res.redirect('/create');
                 }
             
@@ -241,7 +232,7 @@ function createController(){
                         from: process.env.EMAIL,
                         to: email,
                         subject: 'Email from Interview Scheduler',
-                        text: `Hi , Your Interview scheduled has been revised from ${startTime} to ${endTime} on the date ${date}. The interview is about ${title} : ${description}.  All the Best. `
+                        text: `Hi , Your Interview scheduled has been updated from ${startTime} to ${endTime} on the date ${date}. The interview is about ${title} : ${description}.  All the Best. `
                     }
                     transporter.sendMail(mailOptions , (error , info )=> {
                         if( error)
