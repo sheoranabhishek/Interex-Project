@@ -2,9 +2,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://www.interviewbit.com">
-    <img src="https://i0.wp.com/blog.interviewbit.com/wp-content/uploads/2017/11/cropped-logo-transparent4.png?ssl=1" alt="Logo" width="80" height="80">
-  </a>
+ 
+ <h1 align="center">Interex</h3>
 
   <h3 align="center">Interview Scheduler</h3>
 
@@ -43,8 +42,7 @@
 
 ![screenshot](https://i.ibb.co/qjp7kwN/Capture.png)
 
-This project is a part of an interview assignment assigned by InterviewBit.
-The project is called Interview Scheduler. This scheduler is a solution to all the basic requirement of an interviewer. 
+The project is called Interex - An interview scheduler. This scheduler is a solution to all the basic requirement of an interviewer. 
 
 Here's what it does : 
 ✅ Schedule interviews.
